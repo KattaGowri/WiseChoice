@@ -1,12 +1,14 @@
-streamlit
+streamlit==1.28.1
 pandas
-nltk
+nltk>=3.6.1
 plotly
 joblib
 wordcloud
 matplotlib
 mysql-connector-python
 selenium
-bs4
+beautifulsoup4==4.11.1
+lxml
+scikit-learn
 amazoncaptcha
 googletrans
