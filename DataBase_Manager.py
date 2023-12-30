@@ -22,6 +22,7 @@ def decode(c):
 class DataBase:
     def __init__(self):
         try:
+            #Change username and password arguments to your username and password
             self.conn = mysql.connector.connect(host='localhost',database = "Login_Data",user = "WiseChoice",password = 'HinokamiKagura',auth_plugin='mysql_native_password')
             self.cur = self.conn.cursor()
         except :
