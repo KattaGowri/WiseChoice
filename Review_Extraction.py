@@ -14,13 +14,12 @@ from time import sleep
 
 class Review_Extract:
     def __init__(self):
-#         chrome_options = Options()
+#         Uncomment These 2 lines to hide the browser that pops up
+        chrome_options = Options()
 #         chrome_options.add_argument('--headless')
 #         chrome_options.add_argument('--disable-gpu')
-        chrome_options = Options()
-
         # Check if ChromeDriver is already installed; if not, install and cache it
-        self.driver = webdriver.Chrome("C:/chromedriver.exe", options=chrome_options)
+        self.driver = webdriver.Chrome("chromedriver.exe", options=chrome_options)
         print("Success")
         self.data = []
         self.trans = Translator()

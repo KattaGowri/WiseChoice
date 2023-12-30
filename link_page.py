@@ -10,9 +10,9 @@ import plotly.graph_objs as go
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from joblib import load
-# nltk.download('stopwords')
-# nltk.download('punkt')
-# nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')
 
 
 custom_text_css = """

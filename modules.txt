@@ -1,0 +1,12 @@
+streamlit
+pandas
+nltk
+plotly
+joblib
+wordcloud
+matplotlib
+mysql-connector-python
+selenium
+bs4
+amazoncaptcha
+googletrans
