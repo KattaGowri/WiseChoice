@@ -16,7 +16,8 @@ commit;
 
 You have to change the username, Password in the DataBase_Manager.py file
 
-Download all the modules mentioned in modules.txt file
+Download all the modules mentioned in requirements.txt file. Use the following command:-
+pip install -r requirements.txt
 
 Save every file including the models in the same directory
 
