@@ -14,12 +14,13 @@ from time import sleep
 
 class Review_Extract:
     def __init__(self):
-#         Uncomment These 2 lines to hide the browser that pops up
-        chrome_options = Options()
+#         chrome_options = Options()
 #         chrome_options.add_argument('--headless')
 #         chrome_options.add_argument('--disable-gpu')
+        chrome_options = Options()
+
         # Check if ChromeDriver is already installed; if not, install and cache it
-        self.driver = webdriver.Chrome("chromedriver.exe", options=chrome_options)
+        self.driver = webdriver.Chrome("C:/chromedriver.exe", options=chrome_options)
         print("Success")
         self.data = []
         self.trans = Translator()
@@ -48,6 +49,7 @@ class Review_Extract:
         
     def extract(self,url):
         self.driver.get(url)
+        self.bypass()
         html = BeautifulSoup(self.driver.page_source,'lxml')
         data_dicts = []
     
@@ -127,11 +129,10 @@ class Review_Extract:
             return False
     
     def fairness_score(self,Pmin, Pmax, Pavg, Pcur):
-        return 77 #Change Later
         if Pmax == Pmin:
             return 50 if Pcur == Pavg else (100 if Pcur == Pmin else 0)
         else:
-            return 0.5 * (100 * (Pavg - Pcur) / (Pavg - Pmin) + 100 * (Pcur - Pavg) / (Pmax - Pavg))
+            return (abs(Pcur-Pavg)/(Pmax - Pmin))*100
 
     def start(self,p_url):
         reviews = []
