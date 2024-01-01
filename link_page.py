@@ -14,7 +14,6 @@ from joblib import load
 # nltk.download('punkt')
 # nltk.download('wordnet')
 
-
 custom_text_css = """
     <style>
         .custom-text {
