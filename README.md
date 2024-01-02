@@ -20,7 +20,7 @@ You have to change the username, Password in the DataBase_Manager.py file
 Download all the modules mentioned in requirements.txt file. Use the following command:-
 pip install -r requirements.txt
 
-Save every file including the models in the same directory
+Save every file including the models and chromedriver in the same directory. You also need to have google chrome installed
 
 After completing everything, open terminal and loacte and move into that directory and run the below command :
       streamlit run login_signup.py
