@@ -20,7 +20,7 @@ class Review_Extract:
 #         chrome_options.add_argument('--disable-gpu')
         
 
-        # Check if ChromeDriver is already installed; if not, install and cache it
+        # Check if ChromeDriver is already downloaded
         self.driver = webdriver.Chrome("chromedriver.exe", options=chrome_options)
         print("Success")
         self.data = []
