@@ -22,8 +22,8 @@ def decode(c):
 class DataBase:
     def __init__(self):
         try:
-            #Change username and password arguments to your username and password
-            self.conn = mysql.connector.connect(host='localhost',database = "Login_Data",user = "WiseChoice",password = 'HinokamiKagura',auth_plugin='mysql_native_password')
+            # Change username and password
+            self.conn = mysql.connector.connect(host='localhost',database = "Login_Data",user = "WiseChoice",password = 'HinokamiKagura')
             self.cur = self.conn.cursor()
         except :
             pass
@@ -64,61 +64,4 @@ class DataBase:
     def finish(self):
         self.cur.close()
         self.conn.close()
-DataBase()
-# import streamlit as st
-# 
-# 
-# conn = DataBase()
-# 
-# st.markdown("<h1 style='color: #3366cc;'>WiseChoice</h1><h5 style='color: #3366cc;'>Your intelligent shopping companion</h5>", unsafe_allow_html=True)
-# 
-# 
-# st.markdown(
-#     """
-#     <style>
-#         %s
-#     </style>
-#     """
-#     % open("bgrnd.css").read(),
-#     unsafe_allow_html=True
-# )
-# 
-# 
-# 
-# # Sidebar navigation
-# page = st.sidebar.radio("Select a page", ["Login", "Signup"])
-# col = st.columns(2)
-# 
-# if page == "Login":
-#     with col[0]:
-#         st.header("Login")
-# 
-#     # Input fields
-#     with col[0]:
-#         id = st.text_input("Username")
-#         pswrd = st.text_input("Password", type="password")
-#     with col[1]:
-#         for i in range(23):
-#             st.write("")
-#         b = st.button('login')
-#     if b:
-#         user = conn.login(id,pswrd)
-#         if user==-1:
-#             st.error("Incorrect Password!!!")
-#         elif user == -2:
-#             st.error("Invalid UserId!!!")
-#         else:
-#             st.info("Welcome "+user+"!!!")
-#             
-#     
-#     
-# elif page == "Signup":
-#     with col[0]:
-#         st.header("Signup")
-#         signup_username = st.text_input("Choose a username")
-#         signup_mailid = st.text_input('Mail Id')
-#         signup_password = st.text_input("Choose a password", type="password")
-#     with col[1]:
-#         for i in range(28):
-#             st.write("")
-#         st.button('signup')
+# DataBase()

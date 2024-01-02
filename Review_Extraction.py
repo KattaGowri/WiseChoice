@@ -14,13 +14,14 @@ from time import sleep
 
 class Review_Extract:
     def __init__(self):
-#         chrome_options = Options()
+        chrome_options = Options()
+#         Uncommenting below 2 lines can disable the browser pop up
 #         chrome_options.add_argument('--headless')
 #         chrome_options.add_argument('--disable-gpu')
-        chrome_options = Options()
+        
 
         # Check if ChromeDriver is already installed; if not, install and cache it
-        self.driver = webdriver.Chrome("C:/chromedriver.exe", options=chrome_options)
+        self.driver = webdriver.Chrome("chromedriver.exe", options=chrome_options)
         print("Success")
         self.data = []
         self.trans = Translator()
@@ -166,4 +167,4 @@ class Review_Extract:
 
 # obj = Review_Extract()
 # print(obj.start(input('Enter Product Link :')))
-# obj.price_cal("https://www.amazon.in/LG-Inverter-Frost-Free-Refrigerator-GL-I292RPZX/dp/B08X72GY5Q/ref=sr_1_1?_encoding=UTF8&content-id=amzn1.sym.1c82c58f-ba94-4c7f-addd-8abb3f123860&pd_rd_r=74a8f6be-3cdc-4e75-8efe-619a8c411327&pd_rd_w=5ofjr&pd_rd_wg=McaQ7&pf_rd_p=1c82c58f-ba94-4c7f-addd-8abb3f123860&pf_rd_r=BY5FHH84MF75TTQBAV88&qid=1703746181&refinements=p_85%3A10440599031&rps=1&s=kitchen&sr=1-1&th=1")
+
