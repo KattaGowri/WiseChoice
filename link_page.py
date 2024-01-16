@@ -10,9 +10,9 @@ import plotly.graph_objs as go
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from joblib import load
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
+# nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('wordnet')
 
 custom_text_css = """
     <style>
@@ -35,22 +35,21 @@ def text_process(review):
 
 def predict_and_filter(original_dataframe, model):
     # Create an empty DataFrame for storing rows with "OG" prediction
-    with open('Genuine_Reviews.csv', 'w', newline='') as file:
-        writer = csv.writer(file)
-        l=[]
+    
+    l=[]
 
-        # Iterate through each row of the original DataFrame
-        for index, row in original_dataframe.iterrows():
-            # Convert the row to a Pandas Series object
-            row_series = pd.Series(row)
+    # Iterate through each row of the original DataFrame
+    for index, row in original_dataframe.iterrows():
+        # Convert the row to a Pandas Series object
+        row_series = pd.Series(row)
 
-            # Use the model to make a prediction
-            prediction = model.predict(row_series.values.reshape(1, -1))[0]
+        # Use the model to make a prediction
+        prediction = model.predict(row_series.values.reshape(1, -1))[0]
 
-            # Check if the prediction is "OG"
-            if prediction == "OR":
-                l.append(row)
-        return pd.DataFrame(l)
+        # Check if the prediction is "OR"
+        if prediction == "OR":
+            l.append(row)
+    return pd.DataFrame(l)
     
 def extract(reviews):
     model = load(open(r"fake_review.joblib", 'rb'))

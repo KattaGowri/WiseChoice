@@ -20,9 +20,8 @@ class Review_Extract:
 #         chrome_options.add_argument('--disable-gpu')
         
 
-        # Check if ChromeDriver is already downloaded
-        self.driver = webdriver.Chrome("chromedriver.exe", options=chrome_options)
-        print("Success")
+        
+        self.driver = webdriver.Chrome("C:/chromedriver.exe", options=chrome_options)
         self.data = []
         self.trans = Translator()
         
@@ -164,7 +163,8 @@ class Review_Extract:
         
 
     
-
+# 
 # obj = Review_Extract()
+# obj.bypass()
 # print(obj.start(input('Enter Product Link :')))
 
