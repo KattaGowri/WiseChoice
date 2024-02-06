@@ -1,6 +1,7 @@
 import streamlit as st
 from time import sleep
-import Review_Extraction,pickle,csv,string,re,nltk
+from Review_Extraction import Amazon_Review_Extract,Flipkart_Review_Extract
+import pickle,csv,string,re,nltk
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk import word_tokenize
@@ -141,7 +142,7 @@ with open('user.txt') as f:
     st.markdown(custom_text_css, unsafe_allow_html=True)
     st.header('Welcome '+f.read()+'!!!')
 st.markdown(custom_text_css, unsafe_allow_html=True)   
-link = st.text_input("Amazon Product Link",placeholder='Enter Product Link here')
+link = st.text_input("Amazon/Flipkart Product Link",placeholder='Enter Product Link here')
 col = st.columns(5)
 with col[4]:
     b = st.button('Analyze')
@@ -150,7 +151,10 @@ if b:
         sleep(3)
     with st.status("Analyzing Product ....",expanded=True):
         #Review_Extraction
-        obj = Review_Extraction.Review_Extract()
+        if 'flipkart' in link:
+            obj = Flipkart_Review_Extract()
+        else :
+            obj = Amazon_Review_Extract()
         st.write("Extracting Reviews....")
         reviews = obj.start(link)
         if reviews.empty:
