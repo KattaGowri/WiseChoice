@@ -23,7 +23,7 @@ class DataBase:
     def __init__(self):
         try:
             # Change username and password
-            self.conn = mysql.connector.connect(host='localhost',database = "Login_Data",user = "WiseChoice",password = 'HinokamiKagura')
+            self.conn = mysql.connector.connect(host='localhost',database = "Login_Data",user = "WiseChoice",password = 'wisechoice@1')
             self.cur = self.conn.cursor()
         except :
             pass
@@ -64,4 +64,5 @@ class DataBase:
     def finish(self):
         self.cur.close()
         self.conn.close()
+        
 # DataBase()
