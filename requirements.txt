@@ -12,3 +12,4 @@ lxml
 scikit-learn
 amazoncaptcha
 googletrans
+webdriver_manager
