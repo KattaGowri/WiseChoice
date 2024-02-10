@@ -15,14 +15,15 @@ use Login_Data;
 create table data(name varchar(30),email varchar(30),password varchar(50),PRIMARY KEY(name,email));
 commit;
 
-If you keep username as 'WiseChoice' and password as 'wisechoice@1', You have to change the username and Password in the DataBase_Manager.py file.
+Keep username as 'WiseChoice' and password as 'wisechoice@1'. Otherwise you have to change the username and P
+password in the DataBase_Manager.py file.
 
 Download all the modules mentioned in requirements.txt file. Use the following command:-
 pip install -r requirements.txt
 
 Save every file including the models and chromedriver in the same directory. You also need to have google chrome installed. If you install the latest version of selenium, you wont be needing chromedriver.exe
 
-After completing everything, open terminal and loacte and move into that directory and run the below command :
+After completing everything, open terminal and loacte and move into that directory where you cloned the repository and run the below command :
       streamlit run login_signup.py
 
-or just run the launch.py file
+or just run the launch.py file to launch the application in browser.
