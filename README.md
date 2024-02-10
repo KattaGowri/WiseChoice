@@ -22,7 +22,8 @@ pip install -r requirements.txt
 
 Save every file including the models and chromedriver in the same directory. You also need to have google chrome installed. If you install the latest version of selenium, you wont be needing chromedriver.exe
 
-After completing everything, open terminal and loacte and move into that directory where you cloned the repository and run the below command :
+After completing everything, open terminal and locate and move into that directory where you cloned the repository and run the below command :
+
       streamlit run login_signup.py
 
 or just run the launch.py file to launch the application in browser.
