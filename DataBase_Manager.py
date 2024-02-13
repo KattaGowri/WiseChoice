@@ -64,5 +64,4 @@ class DataBase:
     def finish(self):
         self.cur.close()
         self.conn.close()
-        
-# DataBase()
+DataBase()
