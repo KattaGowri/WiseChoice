@@ -19,22 +19,8 @@ class Amazon_Review_Extract:
 #         chrome_options.add_argument('--headless')
 #         chrome_options.add_argument('--disable-gpu')
         
-
-        
         self.driver = webdriver.Chrome(options=chrome_options)
-        self.data = []
         self.trans = Translator()
-        
-        
-    def link(self,url):
-        asin_pattern = r'/[A-Z0-9]{10}(?=/|$)'
-        match = re.search(asin_pattern, url)
-        if match:
-            asin =  match.group(0)[1:]
-            domain = url.split('ww.amazon.')[1][:3]
-            return "https://www.amazon."+domain+"/product-reviews/"+asin+"/ref=cm_cr_arp_d_paging_btm_next_2?ie=UTF8&reviewerType=all_reviews&pageNumber="
-        else:
-            quit()
         
     def bypass(self):
         try:
@@ -47,64 +33,16 @@ class Amazon_Review_Extract:
         except :
             return 
         
-    def extract(self,url):
-        self.driver.get(url)
-        self.bypass()
-        html = BeautifulSoup(self.driver.page_source,'lxml')
-        data_dicts = []
-    
-        # Select all Reviews BOX html using css selector
-        boxes = html.select('div[data-hook="review"]')
-        
-        # Iterate all Reviews BOX 
-        for box in boxes:
-            
-            # Select Name using css selector and cleaning text using strip()
-            # If Value is empty define value with 'N/A' for all.
-            try:
-                name = box.select_one('[class="a-profile-name"]').text.strip()
-            except Exception as e:
-                name = 'N/A'
-
-            try:
-                stars = box.select_one('[data-hook="review-star-rating"]').text.strip().split(' out')[0]
-            except Exception as e:
-                stars = 'N/A'   
-
-            try:
-                title = box.select_one('[data-hook="review-title"]').text
-                title = re.sub(r"\d.\d out of 5 stars", " ", title)
-            except Exception as e:
-                title = 'N/A'
-
-            try:
-                # Convert date str to dd/mm/yyy format
-                datetime_str = box.select_one('[data-hook="review-date"]').text.strip().split(' on ')[-1]
-                date = datetime.strptime(datetime_str, '%B %d, %Y').strftime("%d/%m/%Y")
-            except Exception as e:
-                date = 'N/A'
-
-            try:
-                description = box.select_one('[data-hook="review-body"]').text.strip()
-                lan = self.trans.detect(description[:5]).lang
-                if lan != 'en':
-                    description = self.trans.translate(description,src=lan,dest='en').text
-            except Exception as e:
-                description = 'N/A'
-
-            # create Dictionary with al review data 
-            data_dict = {
-                'Name' : name,
-                'Stars' : stars,
-                'Title' : title,
-                'Date' : date,
-                'Description' : description
-            }
-
-            # Add Dictionary in master empty List
-            data_dicts.append(data_dict)
-        
-        return data_dicts
+    def extract(self):
+        reviews = self.driver.find_elements(By.XPATH,"//span[@data-hook='review-body']")
+        revs = []
+        for i in reviews:
+            rev = i.text
+            lan = self.trans.detect(rev[:5]).lang
+            if lan != 'en':
+                rev = self.trans.translate(rev,src=lan,dest='en').text
+            revs.append(rev.replace('\n',''))
+        return revs
     
     def price_cal(self,url):
         try:
@@ -136,30 +74,28 @@ class Amazon_Review_Extract:
 
     def start(self,p_url):
         reviews = []
-        url = self.link(p_url)
-        self.driver.get(url+'1')
+        self.driver.get(p_url)
         self.bypass()
-        html = BeautifulSoup(self.driver.page_source,'lxml')
-        self.product_name = html.find('a',class_='a-link-normal')
-        i = 1
+        self.driver.find_element(By.XPATH,"//a[@data-hook='see-all-reviews-link-foot']").click()
+        sleep(2)
+        self.product_name = self.driver.find_element(By.XPATH,"//a[@class='a-link-normal']")
+        c = 0
         while True:
-            review = self.extract(url+str(i))
-            if review == []:
-                break 
-            # add review data in reviews empty list
-            reviews += review
-            i += 1
-        try:
-            df_reviews = pd.DataFrame(reviews)
-            df_reviews["Review"] = df_reviews["Title"]+ df_reviews["Description"]
-            df_reviews = df_reviews["Review"]
-            return pd.DataFrame(df_reviews)
-        except :
-            return pd.DataFrame()
+            review = self.extract()
+            reviews.extend(review)
+            
+            try:
+                self.driver.find_element(By.CLASS_NAME,"a-last").click()
+                sleep(3)
+                self.driver.find_element(By.XPATH,"//li[@class='a-disabled a-last']")
+                break
+            except :
+                pass
+        
+        return pd.DataFrame(reviews)
 #         df_reviews.to_csv('scrapedReviews.csv', index=False)
     def finish(self):
-        self.driver.quit()
-        
+        self.driver.quit()        
         
 
 class Flipkart_Review_Extract:
@@ -209,7 +145,11 @@ class Flipkart_Review_Extract:
             except:
                 pass
             try:
-                review_list.append(i.find_element(By.CLASS_NAME,"t-ZTKy").text)
+                rev = i.find_element(By.CLASS_NAME,"t-ZTKy").text
+                lan = self.trans.detect(rev[:5]).lang
+                if lan != 'en':
+                    rev = self.trans.translate(rev,src=lan,dest='en').text
+                review_list.append(rev)
             except :
                 review_list.append('')
         return review_list
@@ -253,9 +193,10 @@ class Flipkart_Review_Extract:
         self.driver.quit()
 
 # 
-# 
+#
+# obj = Amazon_Review_Extract()
 # obj.bypass()
-# print(obj.start(input()))
+# print(obj.start("https://www.amazon.in/Apple-iPhone-Pro-Max-256/dp/B0CHX1K2ZC/ref=cm_cr_arp_d_pdt_img_top?ie=UTF8&tag=coa_in_g-21"))
 
 # obj = Flipkart_Review_Extract()
 # obj.start("https://www.flipkart.com/sony-alpha-full-frame-ilce-7m2k-bq-in5-mirrorless-camera-body-28-70-mm-lens/p/itm92df94dc68fff?pid=DLLF6QZPNKTQMS8J&fm=organic&ppt=dynamic&ppn=dynamic&ssid=fnewy5pmbk0000001706938474552")
