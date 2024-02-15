@@ -6,7 +6,7 @@ It will filter out Fake reviews using a ML model that has been trained with more
 Then it will perform Sentiment Analysis on the Geniune Reviews and gives an overall rating.
 All other language reviews will be translated into english by using google translate API
 
-Download FakeReview model and Sentiment Analysis model from this link :- 
+Download FakeReview model from this link and Save it in FRONTEND_FILES Folder :- 
 https://drive.google.com/drive/folders/1QTOahzhYT4-gzrlS3K0_a45LQ3c-XQZc?usp=sharing
 
 Make sure you have MySql downloaded. open sql terminal prompt or workbench and execute the following queries :-
