@@ -1,3 +1,9 @@
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+back_folder_path = os.path.join(current_dir, '..')
+sys.path.append(back_folder_path)
+
 from BACKEND_FILES.Review_Extraction import Review_Extract
 from BACKEND_FILES.Fake_Review_Detector import Fake_Review_Analysis
 from BACKEND_FILES.Sentiment_Analysis import Sentiment_Analysis
