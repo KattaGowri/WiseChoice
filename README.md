@@ -13,8 +13,11 @@ Make sure you have MySql downloaded. open sql terminal prompt or workbench and e
 
 
 create database Login_Data;
+
 use Login_Data;
+
 create table data(name varchar(30),email varchar(30),password varchar(50),PRIMARY KEY(name,email));
+
 commit;
 
 Keep username as 'WiseChoice' and password as 'wisechoice@1'. Otherwise you have to change the username and password in the DataBase_Manager.py file.
