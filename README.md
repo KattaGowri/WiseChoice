@@ -10,6 +10,8 @@ Download FakeReview model from this link and Save it in FRONTEND_FILES Folder :-
 https://drive.google.com/drive/folders/1QTOahzhYT4-gzrlS3K0_a45LQ3c-XQZc?usp=sharing
 
 Make sure you have MySql downloaded. open sql terminal prompt or workbench and execute the following queries :-
+
+
 create database Login_Data;
 use Login_Data;
 create table data(name varchar(30),email varchar(30),password varchar(50),PRIMARY KEY(name,email));
