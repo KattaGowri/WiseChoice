@@ -59,8 +59,15 @@ if b:
         #Review_Extraction
         st.write("Extracting Reviews....")
         review_extracter.launch()
-        reviews = review_extracter.start(link)
-        if reviews.empty:
+        try:
+            reviews = review_extracter.start(link)
+            pos = False
+        except:
+            reviews = pd.DataFrame([])
+            pos = True
+        if pos:
+            st.error('Unable to Extract Reviews')
+        elif reviews.empty:
             st.error("Product Doesnot have any Reviews")
         else:
             #Price Analysis

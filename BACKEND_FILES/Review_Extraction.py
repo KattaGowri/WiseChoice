@@ -111,8 +111,14 @@ class Review_Extract:
         except :
             pass
         sleep(1)
-        a = self.driver.find_element(By.XPATH,"//nav[@class='yFHi8N']//a")
-        page_count = self.driver.find_element(By.XPATH,"//div[@class='_2MImiq _1Qnn1K']//span").text
+        try:
+            a = self.driver.find_element(By.XPATH,"//nav[@class='yFHi8N']//a")
+        except:
+            pass
+        try:
+            page_count = self.driver.find_element(By.XPATH,"//div[@class='_2MImiq _1Qnn1K']//span").text
+        except:
+            page_count = 1
         return a.get_attribute('href')[:-1],int(page_count.split()[-1])
 
     def flipkart_extract(self,link):
@@ -146,7 +152,10 @@ class Review_Extract:
         link,page_count = self.review_link_extract(link)
         l = []
         for i in range(1,page_count+1):
-            l.extend(self.flipkart_extract(link+str(i)))
+            try:
+                l.extend(self.flipkart_extract(link+str(i)))
+            except:
+                break
         return pd.DataFrame(l,columns=['Review'])
 
 

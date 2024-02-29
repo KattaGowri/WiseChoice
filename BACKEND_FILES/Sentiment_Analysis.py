@@ -61,6 +61,8 @@ class Sentiment_Analysis:
         sentiments = []
         for i in df.iterrows():
             rev = list(i[1])[0]
+            if rev == '':
+                continue
             try:
                 rev = rev[:1500]
             except:
