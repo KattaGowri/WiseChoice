@@ -40,7 +40,7 @@ class DataBase:
         
     def enter(self,name,email,password):
         if not self.check(email,name):
-            self.cur.execute("Insert into DATA values('"+name+"','"+email+"','"+encode(password)+"')")
+            self.cur.execute("Insert into data values('"+name+"','"+email+"','"+encode(password)+"')")
             self.conn.commit()
             return True
         else:
