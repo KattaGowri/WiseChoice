@@ -23,7 +23,7 @@ class DataBase:
     def __init__(self):
         try:
             # Change username and password
-            self.conn = mysql.connector.connect(host='localhost',database = "Login_Data",user = "WiseChoice",password = 'wisechoice@1')
+            self.conn = mysql.connector.connect(host='database-1.cluster-c7eaiiqk25mh.ap-south-1.rds.amazonaws.com',database = "Login_Data",user = "wisechoice",password = 'wisechoice1')
             self.cur = self.conn.cursor()
         except :
             pass
