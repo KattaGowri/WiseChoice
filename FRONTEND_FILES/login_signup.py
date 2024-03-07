@@ -73,7 +73,7 @@ if page == "Login":
                     <title>Redirecting...</title>
                 </head>
                 <body>
-                    <p>If you are not redirected automatically, <a href='http://{url}:8502'>click here</a>.</p>
+                    <p>If you are not redirected automatically, <a href='http://3.7.8.8:8502'>click here</a>.</p>
                 </body>
                 </html>
                 """
