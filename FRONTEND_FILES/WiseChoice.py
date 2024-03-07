@@ -24,6 +24,9 @@ from joblib import load
 # nltk.download('stopwords')
 # nltk.download('punkt')
 # nltk.download('wordnet')
+import sys
+
+args = list(sys.argv[1:])[0]
 
 def text_process(review):
     nopunc = [char for char in review if char not in string.punctuation]

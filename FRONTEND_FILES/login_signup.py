@@ -1,7 +1,12 @@
 import streamlit as st
 import DataBase_Manager
-from os import system
 from OTP_system import OTP_SENDER  # Import your OTP_SENDER class
+from os import system
+from PIL import Image
+
+conn = DataBase_Manager.DataBase()
+otp_sender = OTP_SENDER()
+
 
 st.markdown("<h1 style='color: #ffffff;'>WiseChoice</h1><h6 style='color: #ffffff;'>Your intelligent shopping companion</h6>", unsafe_allow_html=True)
 
@@ -23,13 +28,18 @@ custom_text_css = """
     </style>
 """
 
+# Initialize session state
+if 'username' not in st.session_state:
+    st.session_state.username = None
+
 # Sidebar navigation
 page = st.sidebar.radio("Select a page", ["Login", "Signup"])
 col = st.columns(2)
-conn = DataBase_Manager.DataBase()
-otp_sender = OTP_SENDER()  # Create an instance of OTP_SENDER class
+
 
 if page == "Login":
+    system('sudo kill -9 $(sudo lsof -t -i:8502)')
+    st.session_state.username = None
     with col[0]:
         st.header("Login")
 
@@ -51,11 +61,36 @@ if page == "Login":
             else:
                 st.success("Welcome " + user + "!!!")
                 st.balloons()
-                with open('user.txt', 'w') as f:
-                    f.write(user)
-                system('streamlit run link_page.py')
+#                 st.session_state.username = user  # Store username in session state
+                
+                # Define HTML content with meta tag for redirection
+                redirect_html =f"""
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="refresh" content="0; URL='http://3.7.8.8:8502'" />
+                    <title>Redirecting...</title>
+                </head>
+                <body>
+                    <p>If you are not redirected automatically, <a href='http://{url}:8502'>click here</a>.</p>
+                </body>
+                </html>
+                """
+
+                # Render HTML content
+                st.markdown(redirect_html, unsafe_allow_html=True)
+
+                system('streamlit run WiseChoice.py '+user)
+                
+                
+                
+                
+                
 
 elif page == "Signup":
+    system('sudo kill -9 $(sudo lsof -t -i:8502)')
+    st.session_state.username = None
     with col[0]:
         st.header("Signup")
         st.markdown(custom_text_css, unsafe_allow_html=True)
@@ -70,12 +105,12 @@ elif page == "Signup":
             generated_otp = otp_sender.send_mail(mailid)
             if generated_otp != -1:
                 st.success("OTP sent successfully")
-                st.session_state.session = {'generated_otp': generated_otp}  # Store generated_otp in session state
+                st.session_state.generated_otp = generated_otp  # Store generated_otp in session state
             else:
                 st.error("Invalid email format. Please enter a valid email.")
         if st.button('Register'):
-            if st.session_state.session is not None and st.session_state.session['generated_otp'] is not None:
-                if str(st.session_state.session['generated_otp']) == otp:
+            if st.session_state.generated_otp is not None:
+                if str(st.session_state.generated_otp) == otp:
                     if conn.enter(username, mailid, password):
                         st.success("Account Created Successfully")
                     else:
@@ -84,4 +119,3 @@ elif page == "Signup":
                     st.error("Invalid OTP. Please enter the correct OTP.")
             else:
                 st.error("Please generate OTP first.")
-

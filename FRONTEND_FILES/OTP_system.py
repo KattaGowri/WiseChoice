@@ -19,7 +19,7 @@ class OTP_SENDER:
             server.starttls()
             server.login('wisechoice953@gmail.com','gujaapcrtsyycnou')
             server.sendmail('wisechoice953@gmail.com',reciver,msg)
-            print(otp)
+
             return otp
         else:
             return -1
