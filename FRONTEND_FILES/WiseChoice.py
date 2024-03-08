@@ -96,5 +96,20 @@ if b:
                 st.write("Price Analysis Not Possible or Failed")
                 
         review_extracter.finish()
+
+redirect_html =f"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <<a href='http://3.7.8.8:8502'>Back</a>
+</body>
+</html>
+"""
+
+# Render HTML content
+st.markdown(redirect_html, unsafe_allow_html=True)
         
         
