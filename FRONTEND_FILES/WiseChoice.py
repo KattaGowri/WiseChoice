@@ -24,9 +24,11 @@ from joblib import load
 # nltk.download('stopwords')
 # nltk.download('punkt')
 # nltk.download('wordnet')
-import sys
 
-args = list(sys.argv[1:])[0]
+user = list(sys.argv[1:])[0]
+review_extracter = Review_Extract()
+sentiment_analysis = Sentiment_Analysis("cardiffnlp/twitter-roberta-base-sentiment")
+fake_review_filter = Fake_Review_Analysis()
 
 def text_process(review):
     nopunc = [char for char in review if char not in string.punctuation]
@@ -41,15 +43,8 @@ custom_text_css = """
     </style>
 """
 
-
-
-review_extracter = Review_Extract()
-sentiment_analysis = Sentiment_Analysis("cardiffnlp/twitter-roberta-base-sentiment")
-fake_review_filter = Fake_Review_Analysis()
-
-with open('user.txt') as f:
-    st.markdown(custom_text_css, unsafe_allow_html=True)
-    st.header('Welcome '+f.read()+'!!!')
+st.markdown(custom_text_css, unsafe_allow_html=True)
+st.header('Welcome '+user+'!!!')
 st.markdown(custom_text_css, unsafe_allow_html=True)   
 link = st.text_input("Amazon/Flipkart Product Link",placeholder='Enter Product Link here')
 col = st.columns(5)
