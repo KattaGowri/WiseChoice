@@ -23,10 +23,10 @@ class DataBase:
     def __init__(self):
         try:
             # Change username and password
-            self.conn = mysql.connector.connect(host='database-1.cluster-c7eaiiqk25mh.ap-south-1.rds.amazonaws.com',database = "Login_Data",user = "wisechoice",password = 'wisechoice1')
+            self.conn = mysql.connector.connect(host='localhost',database = "Login_Data",user = "WiseChoice",password = 'wisechoice@1')
             self.cur = self.conn.cursor()
-        except :
-            pass
+        except Exception as e:
+            print(e)
         
         
     def check(self,email,name=None):
@@ -40,7 +40,7 @@ class DataBase:
         
     def enter(self,name,email,password):
         if not self.check(email,name):
-            self.cur.execute("Insert into data values('"+name+"','"+email+"','"+encode(password)+"')")
+            self.cur.execute("Insert into DATA values('"+name+"','"+email+"','"+password+"')")
             self.conn.commit()
             return True
         else:
@@ -54,7 +54,7 @@ class DataBase:
         
     def login(self,id,password):
         if self.check(id):
-            if password == decode(self.data[id][1]):
+            if password == self.data[id][1]:
                 return self.data[id][0]
             else:
                 return -1
