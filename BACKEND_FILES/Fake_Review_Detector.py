@@ -2,6 +2,9 @@ from joblib import load
 import pandas as pd
 import string,nltk
 
+def text_process():
+    pass
+
 class Fake_Review_Analysis:
     
     def __init__(self):
@@ -18,3 +21,5 @@ class Fake_Review_Analysis:
         return pd.DataFrame(l,columns=['Review'])
         
 
+if __name__ == '__main__':
+    Fake_Review_Analysis()

@@ -32,8 +32,13 @@ class GeminiTerminalApp:
             res += (chunk.text)
         return res
 
+
+app = GeminiTerminalApp()
 def process(data):
-    app = GeminiTerminalApp()
     data=app.remove_emoji(data)
     data = app.run("Summarize this into 5 pros and 5 cons"+data)
     return data
+
+def product_comp(product1,product2):
+    flag = app.run(f"I need your help to identify whether two products are identical or not.These are the descriptions of the products \n 1. {product1}\n2.{product2} \n Just return me the boolean value whether these products are identical or not. no explanation only True or False")
+    return flag

@@ -151,7 +151,6 @@ if page == 'Analyzer':
                 reviews = review_extracter.start(link)
                 pos = False
             except Exception as e:
-                print(e)
                 reviews = pd.DataFrame([])
                 pos = True
             if pos:
@@ -264,14 +263,39 @@ if page == 'Analyzer':
                     elif grade<=80:
                         st.markdown('<div style="text-align: center;"><span style="font-size: 5em;">A</span></div>',unsafe_allow_html=True)
                     else:
-                        st.markdown('<div style="text-align: center;"><span style="font-size: 5em;">S</span></div>',unsafe_allow_html=True)
-
-
-                        
-                    
+                        st.markdown('<div style="text-align: center;"><span style="font-size: 5em;">S</span></div>',unsafe_allow_html=True)   
                 except:
                     pass
+                
+                review_extracter.driver.get(link)
+                p1 = review_extracter.driver.find_element(By.ID,'productTitle').text
+                if 'amazon' in link:
+                    review_extracter.driver.get('https://www.flipkart.com')
+                    ip = review_extracter.driver.find_element(By.CLASS_NAME,'Pke_EE')
+                    ip.send_keys(p1)
+                    ip.submit()
+                    p2s = review_extracter.driver.find_elements(By.CLASS_NAME,'KzDlHZ')[:5]
+                    p2 = ''
+                    p2s = list(map(lambda x:x.text,p2s))
+                    for i in p2s:
+                        if bot.product_comp(p1,i) == 'True':
+                            p2 = i
+                            break
+                    if p2 == '':
+                        pass
+                    else:
+                        prices = review_extracter.driver.find_elements(By.XPATH,"//div[@class='Nx9bqj _4b5DiR']")[:5]
+                        prices = list(map(lambda x:float(x.text.replace(',','').replace('₹','')),prices))
+                        if review_extracter.prices['Current'] > prices[p2s.index(p2)]:
+                            st.write('Similar Product is available at a lower price at  Flipkart ')
+                            link = review_extracter.driver.find_elements(By.CLASS_NAME,'CGtC98')[p2s.index(p2)].get_attribute('href')
+                            st.markdown(f'<div style="text-align: center;"><span style="font-size: 3em;">{prices[p2s.index(p2)]}</span></div>',unsafe_allow_html=True)
+                            st.markdown(f'<a href="{link}">Click to Follow </a>',unsafe_allow_html=True)                         
+                            
+                else:
+                    pass
             review_extracter.finish()
+            
     
 
 if st.session_state.do and page == 'Alerts':
